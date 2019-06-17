@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body></body>
+<script>
+
+log = x => { document.querySelector("body").innerHTML += x + "</br>"; console.log(x); }
+
+//===========================================================
+//
+// Timing
+//
+//===========================================================
+
+//-----------------------------------------------------------
+// Exécution à retardement
+//-----------------------------------------------------------
+
+// setTimeout(fonction(), délaiMs)
+//
+// On utilise cette méthode pour exécuter la fonction qu'on lui passe
+// après un certain délai en milliseconde
+var salut = function(nom = "Georges"){log("Salut " + nom);};
+log("Début du programme...");
+setTimeout(salut,2000);                   // exécution correcte
+setTimeout(salut("John"),2000);           // exécution au début du programme?
+setTimeout(()=>{salut("Paul");},2000);    // exécution correcte
+
+// les fonctions passées doivent être fournies sans paramètres
+// ou anonymisées par ()=>{} 
+
+// clearTimeout
+//
+// Annule un setTimeout référencé par une variable
+// La fonction ne sera pas exécutée au moment du clearTimeout
+var ringo = setTimeout(()=>{salut("Ringo");},1000);
+clearTimeout(ringo);
+
+//-----------------------------------------------------------
+// Exécution périodique
+//-----------------------------------------------------------
+
+// setInterval(fonction(), périodeMs)
+//
+// Exécute une fonction à chaque x millisecondes. La première exécution
+// a lieu APRÈS une première période
+var seconde = 0;
+setInterval(()=>{log(`${++seconde}s...`)}, 1000);
+setInterval(()=>{salut("Mick")}, 3000);
+
+// clearInterval
+//
+// Annule un setInterval référencé par une variable
+// La fonction ne sera pas exécutée au moment du clearInterval
+var keith = setInterval(()=>{salut("Keith")}, 1500);
+setTimeout(()=>{clearInterval(keith);},5000);
+
+
+</script>
+</html>

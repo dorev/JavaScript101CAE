@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body></body>
+<script>
+
+log = x => { document.querySelector("body").innerHTML += x + "</br>"; console.log(x); }
+
+//===========================================================
+//
+// Manipulation d'array
+//
+//===========================================================
+
+// Un array peut contenir des valeurs de différents types
+var arr = [1,2,"3",4];
+log(arr);
+log("Longueur de l'array : " + arr.length)
+
+//-----------------------------------------------------------
+// Utiliser les extémités de l'array
+//-----------------------------------------------------------
+
+// .pop() et .push(x) retirent et ajoutent des valeurs à la FIN d'un array
+//
+log(arr.pop());       // retourne la valeur extraite
+log(arr.push("6"));   // ajoute la valeur "6" et retourne la longueur résultante
+log(arr);
+
+// .shift() et .unshift(x) retirent et ajoutent des valeurs au DÉBUT d'un array
+// 
+log(arr.shift());         // retourne la valeur extraite
+log(arr.unshift(-1,-2));  // ajoute les valeurs et retourne la longueur résultante
+log(arr);
+
+//-----------------------------------------------------------
+// Utiliser des index spécifiques de l'array
+//-----------------------------------------------------------
+
+// .indexOf(x)
+//
+// Retourne l'index de la valeur rechercher
+log(arr.indexOf(3));        // retourne -1 car cette valeur n'est pas dans l'array
+log(arr.indexOf("3"));
+
+// .includes(x)
+//
+// Retourne true si un des éléments de l'array correspond à la valeur passée
+// La comparaison est faite avec l'opérateur ===
+log(`arr contient la valeur 3 : ${arr.includes(3)}`);
+
+// .slice(x,y)
+//
+// Retourne un nouvel array contenant les éléments de l'array initial
+// à partir de l'index x jusqu'à l'indice PRÉCÉDANT y
+log(`Extrait les indices 2 et 3 : [${arr.slice(2,4)}]`);
+
+// .splice(x,y,z)
+//
+// Cette méthode MODIFIE l'array initial
+// À l'index x, on extrait les y prochains éléments pour y insérer z
+// Un nouvel array des éléments retirés est retourné par .splice
+// On peut s'en servir pour ajouter ou retirer des éléments à l'array à des positions spécifiques
+log(arr);
+log(`À l'indice 1, on retire 2 index et on insère 12 et "42" [${arr.splice(1,2,12,"42")}]`);
+log(arr);
+
+
+//-----------------------------------------------------------
+// Exécuter des opérations sur tout l'array
+//-----------------------------------------------------------
+
+// .some(function())
+//
+// On passe une condition en argument et .some retourne "true" dès
+// qu'un des élément de l'array rempli cette condition
+// Cette condition est une fonction qui prend un argument et qui retourne un bool
+// C'est ce qu'on appelle un prédicat
+let condition = function (i) { return i >= 3;}
+log(`La condition est remplie ? ${arr.some(condition)}`);
+
+// Il existe une syntaxe abrégée pour définir des fonctions
+log(`La condition est remplie ?  ${arr.some(i => i != 0)}`);
+
+// .every(function())
+//
+// Similaire à .some, mais pour que .every retourne "true", tous les 
+// éléments de l'array doivent satisfaire le prédicat
+log(`Chaque valeur est un entier?  ${arr.every(i => Number.isInteger(i))}`);
+
+// .map(function())
+//
+// Exécute la fonction donnée en argument sur chaque élément de l'array 
+// et retourne un nouvel array résultant
+log(`Valeurs multipliées par 200 : [${arr.map( i => i * 200)}]`);
+
+// .reduce(function())
+//
+// Cette méthode vient "cruncher" l'array pour en extraire une seule valeur.
+// La fonction fournie sera exécutée sur chaque élément de l'array et accumulée
+// dans une valeur que sera retournée à la fin de l'exécution
+log(arr);
+let somme = (accumulateur, i) => {return accumulateur + i};
+log(`Somme de l'array : ${arr.reduce(somme)}`); 
+// le résultat est haut non? attention aux types des éléments de l'array! Ici la valeur 
+// semble disproportionnée parce que les valeurs de strings ont été concaténées par
+// l'opérateur + au lieu d'être additionnées
+
+// Dans ce cas-ci on peut utiliser map et parseInt() pour convertir les string en number
+log(`Somme de l'array : ${arr.map( i => parseInt(i)).reduce(somme)}`); 
+
+// On peut également fournir une valeur initiale, qui correspond à la valeur
+// initiale de l'accumulateur
+log(`Somme de l'array avec une valeur initiale de 1000 :${arr.map( i => parseInt(i)).reduce(somme,1000)}`);
+
+</script>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body></body>
+<script>
+
+log = x => { document.querySelector("body").innerHTML += x + "</br>"; console.log(x); }
+
+//===========================================================
+//
+// Manipulation de string
+//
+//===========================================================
+
+var txt1 = "Maître Corbeau"
+var txt2 = "sur un arbre perché";
+
+// Il existe deux syntaxe pour créer des nouveaux string en utilisant
+// des variables comme ressources
+var txt = "TEXTE : " + txt1 + " " + txt2;
+txt = `TEXTE : ${txt1} ${txt2}`;
+
+
+log(txt);
+log(`Longueur du string : ${txt.length}`);
+
+
+//-----------------------------------------------------------
+// Recherche dans le string
+//-----------------------------------------------------------
+
+
+log(`Le texte inclus la valeur "Corbeau" : ${txt.includes("Corbeau")}`);
+
+// Obtenir un caractère par son index
+log(`Caractère numéro 2 : ${txt[2]}`);
+log(txt.charAt(2));
+
+// Obtenir l'index d'un caractère 
+log(`Index de ö : ${txt.indexOf("ö")}`);        // -1 car le caractère n'existe pas dans la string
+log(`Index de u : ${txt.indexOf("u")}`);
+log(`Dernier index de u : ${txt.lastIndexOf("u")}`);
+
+// On peut utiliser les fonctions d'index en spécifiant un point de départ pour la recherche dans le string
+log(`À partir du caractère 22 : {txt.indexOf("u",22)}`);
+log(`Avant le caractère 26 : ${txt.lastIndexOf("u",26)}`);
+
+// Extraire une portion d'un string
+log(`Slice du caractère 8 à 17 : ${txt.slice(8,17)}`);
+
+
+//-----------------------------------------------------------
+// Regular Expressions
+//-----------------------------------------------------------
+
+// Les RegExp sont des string qui, avec leur syntaxe spéciale, identifient
+// des patterns de caractères correspondants
+// Voici un bon outils pour tester ses RegExp https://regex101.com/
+
+var regexp = new RegExp(".(re|er)\s*","g");
+log(txt.match(regexp))
+log(/.(re|er)\s{0,1}/g.test(txt));
+
+
+//-----------------------------------------------------------
+// Transformation du string
+//-----------------------------------------------------------
+
+// .replace("abc","xyz")
+//
+// Parcours le string et remplace le première occurence de "abc" par "xyz"
+log(`Remplacer r par # : ${txt.replace("r","#")}`);
+
+// On peut également utiliser une RegExp pour plus de flexibilité dans la recherche
+// Ici on utilise les flag "g" et "i" pour faire une recherche "global" et "case insensitive"
+log(`Rempllcer tous les r par # : ${txt.replace(/R/gi,"#")}`);
+
+// .toUpperCase et .toLowerCase
+//
+// Utiliser pour mettre toute la string en majuscule ou minuscule
+log(txt.toUpperCase());
+log(txt.toLowerCase());
+
+// .split("x")
+//
+// Sépare la string à chaque apparition de "x" et retourne un array avec chaque section
+log(`Split avec " " : [${txt.split(" ")}]`);
+log(`Split avec "" : [${txt.split("")}]`);
+
+</script>
+</html>

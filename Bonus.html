@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body></body>
+<script>
+
+log = x => { document.querySelector("body").innerHTML += x + "</br>"; console.log(x); }
+
+
+//===========================================================
+//
+// BONUS!!
+//
+//===========================================================
+
+//-----------------------------------------------------------
+// Construire des classes
+//-----------------------------------------------------------
+
+// On peut créer une classe de deux manières :
+
+// Comme en JavaScript les fonctions sont des objets, on peut créer une fonction
+// plus élaborée, en lui donnant des variables membres et en ajoutant des fonctions
+// à son prototype
+
+function MaClasse1(arg1, arg2)
+{
+  this.var1 = arg1;
+  this.var2 = arg2;
+}
+
+MaClasse1.prototype.add = function()
+{
+  return this.var1 + this.var2;
+}
+
+// Sinon il existe une syntaxe de classe similaire à d'autre language
+
+class MaClasse2
+{
+  constructor(arg1, arg2)
+  {
+    this.var1 = arg1;
+    this.var2 = arg2;  
+  }
+  
+  add()
+  {
+    return this.var1 + this.var2;
+  }  
+}
+
+// Dans les deux cas on instancie de nouvelles classes avec "new"
+var classe1 = new MaClasse1(2,3);
+var classe2 = new MaClasse2(5,7);
+log(`classe1.add = ${classe1.add()}`);
+log(`classe2.add = ${classe2.add()}`);
+
+
+//-----------------------------------------------------------
+// const vs Object.freeze()
+//-----------------------------------------------------------
+// Un Object qui est "const" ne peut pas être redéclaré, mais on peut quand
+// même le modifier. Pour prévenir ceci, on peut utiliser "Object.freeze()"
+
+const meilleurJeu = { titre : "Half-Life"};
+
+try { meilleurJeu = {titre : "Turok 2"}; } catch (e){};  // génère une erreur
+
+meilleurJeu.titre = "StarCraft BroodWar"  // fonctionne
+Object.freeze(meilleurJeu);               // on gèle l'object
+meilleurJeu.titre = "Ocarina Of Time";    // cette modification ne sera pas exécutée
+log(meilleurJeu);                         // StarCraft BroodWar
+
+if(Object.isFrozen(meilleurJeu))
+{
+  // Too bad, l'Object est gelé à jamais.
+  // Le mieux qu'on puisse faire est de le copier dans un autre Object, 
+  // propriété  par propriété. Une simple copie conservera l'état "Frozen"
+  let autreJeu = {};
+  for(let i in meilleurJeu) { autreJeu[i] = meilleurJeu[i]; }
+  autreJeu.titre = "Baldur's Gate";
+  log(autreJeu);
+}
+
+
+// Ce n'est pas tout, un Object qui est gelé ne l'est pas en profondeur,
+// c'est-à-dire que s'il contient des sous-objets, ceux-ci sont modifiables
+
+// Voir "shallow freeze", pour les curieux
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze#What_is_shallow_freeze
+
+
+//-----------------------------------------------------------
+// global, var, let
+//-----------------------------------------------------------
+function test ()
+{
+  // variable globale
+  a = 1;      
+  
+  // variable locale "classique", existe à partir de ce point dans ce scope
+  let b = 2;  
+  
+  log("a à l'intérieur de test(){} : " + a);
+  log("b à l'intérieur de test(){} : " + b);
+  log("c à l'intérieur de test(){} : " + c);
+  
+  // variable locale "globale", existe à tout moment dans ce scope
+  var c = 3;  
+}
+
+test();
+
+log("a à l'extérieur de test(){} : " + a);
+
+try 
+{
+  log("b à l'extérieur de test(){} : " + b);  // variable non déclarée
+} 
+catch(e) {log(e);}
+
+try 
+{
+  log("c à l'extérieur de test(){} : " + c);  // variable non déclarée
+} 
+catch(e) {log(e);}
+
+
+</script>
+</html>
